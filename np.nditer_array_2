@@ -1,0 +1,295 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 131,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 128,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "a=np.arange(12).reshape(3,4)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 129,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[ 0,  1,  2,  3],\n",
+       "       [ 4,  5,  6,  7],\n",
+       "       [ 8,  9, 10, 11]])"
+      ]
+     },
+     "execution_count": 129,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "a"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 124,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0\n",
+      "1\n",
+      "4\n",
+      "9\n",
+      "16\n",
+      "25\n",
+      "36\n",
+      "49\n",
+      "64\n",
+      "81\n",
+      "100\n",
+      "121\n",
+      "0\n",
+      "1\n",
+      "4\n",
+      "9\n",
+      "16\n",
+      "25\n",
+      "36\n",
+      "49\n",
+      "64\n",
+      "81\n",
+      "100\n",
+      "121\n"
+     ]
+    }
+   ],
+   "source": [
+    "#------------------------------printing all the number in the lsit:------------------# \n",
+    "for i in range(0,3):\n",
+    "    for j in range(0,4):\n",
+    "        print(a[i][j])\n",
+    "#-------------------------Alternative way:----------------------#\n",
+    "for i in a:\n",
+    "    for j in i:\n",
+    "        print(j)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 125,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0\n",
+      "1\n",
+      "4\n",
+      "9\n",
+      "16\n",
+      "25\n",
+      "36\n",
+      "49\n",
+      "64\n",
+      "81\n",
+      "100\n",
+      "121\n"
+     ]
+    }
+   ],
+   "source": [
+    "#---------------------(np.nditer)it is the most sofasticated way of trvaersing in an array\n",
+    "for i in np.nditer(a):\n",
+    "    print(i)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0\n",
+      "1\n",
+      "2\n",
+      "3\n",
+      "4\n",
+      "5\n",
+      "6\n",
+      "7\n",
+      "8\n",
+      "9\n",
+      "10\n",
+      "11\n"
+     ]
+    }
+   ],
+   "source": [
+    "#---------------------order='C' going row by row and printing the each element:------------\n",
+    "for i in np.nditer(a,order='C'):\n",
+    "    print(i)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0\n",
+      "4\n",
+      "8\n",
+      "1\n",
+      "5\n",
+      "9\n",
+      "2\n",
+      "6\n",
+      "10\n",
+      "3\n",
+      "7\n",
+      "11\n"
+     ]
+    }
+   ],
+   "source": [
+    "-------------------------#order='F' going column by column and printing the each element:---------------#\n",
+    "for i in np.nditer(a,order='F'):\n",
+    "    print(i)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0 4 8]\n",
+      "[1 5 9]\n",
+      "[ 2  6 10]\n",
+      "[ 3  7 11]\n"
+     ]
+    }
+   ],
+   "source": [
+    "#-------------------------print ecah columns but in the array form ex->[1,2,3]------------------\n",
+    "for i in np.nditer(a,order='F',flags=['external_loop']):\n",
+    "    print(i)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 126,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#-> ---------------op_flags='readwrite' helps in the for reading opreation directly in the same array:--------------- \n",
+    "#eaxmple we are doing sqaure opration in the same 'a' array\n",
+    "for i in np.nditer(a,op_flags=['readwrite']):\n",
+    "    i[...]=i*i\n",
+    "#-----Alternative way:-----------------#\n",
+    "for i in range(0,len(a)):\n",
+    "    for j in range(0,len(a[0])):\n",
+    "        a[i][j]=a[i][j]*a[i][j]\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 130,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0 1\n",
+      "1 1\n",
+      "2 1\n",
+      "3 1\n",
+      "4 2\n",
+      "5 2\n",
+      "6 2\n",
+      "7 2\n",
+      "8 3\n",
+      "9 3\n",
+      "10 3\n",
+      "11 3\n"
+     ]
+    }
+   ],
+   "source": [
+    "b=np.arange(1,4).reshape(3,1)\n",
+    "print(b)\n",
+    "#-------------taking elemnent from 'a'array and taking elemnet from 'b' array #-> the secondary array should be boradcastable:--------\n",
+    "for i,j in np.nditer([a,b]):\n",
+    "    print(i,j)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
